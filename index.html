@@ -1,1 +1,70 @@
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desi TV Guide | Pakistan & India</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#101827;color:white}
+header{background:#087f5b;text-align:center;padding:25px 12px}
+header h1{margin:0;font-size:29px}
+header p{margin-bottom:0}
+nav{display:flex;justify-content:center;gap:10px;padding:15px;flex-wrap:wrap}
+button{padding:11px 17px;border:0;border-radius:8px;cursor:pointer;font-weight:bold;background:#10b981;color:#fff}
+main{max-width:950px;margin:auto;padding:16px}
+input{width:100%;padding:13px;border-radius:8px;border:0;margin-bottom:18px;font-size:16px}
+h2{border-bottom:2px solid #10b981;padding-bottom:9px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.card{background:#1e293b;padding:16px;border-radius:12px;text-align:center}
+.card h3{margin:5px 0 12px}
+.card a{display:inline-block;background:#087f5b;color:white;text-decoration:none;padding:9px 12px;border-radius:7px;font-size:14px}
+footer{text-align:center;padding:25px;color:#cbd5e1;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+<h1>📺 Desi TV Guide</h1>
+<p>Pakistani & Indian Television Channels</p>
+</header>
+<nav>
+<button onclick="showCountry('All')">All Channels</button>
+<button onclick="showCountry('Pakistan')">🇵🇰 Pakistan</button>
+<button onclick="showCountry('India')">🇮🇳 India</button>
+</nav>
+<main>
+<input id="search" placeholder="Search channels..." oninput="render()">
+<h2 id="heading">Popular TV Channels</h2>
+<div class="grid" id="channels"></div>
+<p>Watch using official broadcaster websites. Availability may vary by country.</p>
+</main>
+<footer>Desi TV Guide · Independent channel directory · All trademarks belong to their owners.</footer>
+<script>
+const data=[
+["ARY Digital","Pakistan","https://arydigital.tv/"],
+["Geo News","Pakistan","https://www.geo.tv/"],
+["Hum TV","Pakistan","https://hum.tv/"],
+["PTV","Pakistan","https://ptv.com.pk/"],
+["Express News","Pakistan","https://expressnews.tv/"],
+["Dawn News","Pakistan","https://www.dawnnews.tv/"],
+["DD News","India","https://prasarbharati.gov.in/"],
+["DD National","India","https://prasarbharati.gov.in/"],
+["Aaj Tak","India","https://www.aajtak.in/"],
+["NDTV","India","https://www.ndtv.com/"],
+["India Today","India","https://www.indiatoday.in/"],
+["ABP News","India","https://www.abplive.com/"]
+];
+let country="All";
+function showCountry(c){country=c;render()}
+function render(){
+let q=document.getElementById("search").value.toLowerCase();
+let list=data.filter(x=>(country==="All"||x[1]===country)&&x[0].toLowerCase().includes(q));
+document.getElementById("heading").textContent=country==="All"?"Popular TV Channels":country+" TV Channels";
+document.getElementById("channels").innerHTML=list.map(x=>`<div class="card"><h3>${x[0]}</h3><p>${x[1]==="Pakistan"?"🇵🇰 Pakistan":"🇮🇳 India"}</p><a href="${x[2]}" target="_blank" rel="noopener noreferrer">Official Website ↗</a></div>`).join("")||"<p>No channels found.</p>";
+}
+render();
+</script>
+</body>
+</html>
